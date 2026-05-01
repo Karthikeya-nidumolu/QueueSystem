@@ -1,4 +1,4 @@
-﻿[build]
+[build]
   command = """
   echo \"export const firebaseConfig = { \
     apiKey: '${FIREBASE_API_KEY}', \
