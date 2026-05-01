@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Queue System</title>
+    <style>
+        :root { --primary: #005f73; --bg: #f6efe1; --text: #102a43; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        h1 { color: var(--primary); margin-bottom: 40px; font-size: 3rem; }
+        .links-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+        a.card { background-color: white; text-decoration: none; color: var(--text); padding: 40px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 250px; }
+        a.card h2 { margin: 0 0 15px 0; color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <h1>Hospital Queue System</h1>
+        <div class="links-container">
+            <a href="kiosk.html" class="card"><h2>Patient Kiosk</h2><p>Voice-guided queue system for patients.</p></a>
+            <a href="doctor.html" class="card"><h2>Doctor Dashboard</h2><p>Manage patients and waitlist.</p></a>
+        </div>
+    </div>
+</body>
+</html>

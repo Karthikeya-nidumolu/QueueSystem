@@ -1,0 +1,1196 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice-Guided Smart Queue Management System - Kiosk</title>
+  <style>
+    :root {
+      --bg: #f6efe1;
+      --card: #ffffff;
+      --primary: #005f73;
+      --primary-dark: #003d49;
+      --accent: #ee9b00;
+      --text: #102a43;
+      --muted: #5c6b73;
+      --success: #157f3b;
+      --warning: #9a5b00;
+      --danger: #b42318;
+      --border: #d9e2ec;
+      --shadow: 0 18px 45px rgba(16, 42, 67, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(238, 155, 0, 0.18), transparent 26%),
+        radial-gradient(circle at top right, rgba(0, 95, 115, 0.15), transparent 30%),
+        linear-gradient(180deg, #fbf7ef 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero,
+    .panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(0, 95, 115, 0.08);
+    }
+
+    .hero {
+      padding: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.12;
+      color: var(--primary-dark);
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .lang-btn,
+    .doctor-btn,
+    .action-btn,
+    .demo-link-btn {
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-weight: 700;
+    }
+
+    .lang-btn {
+      min-width: 120px;
+      padding: 16px 18px;
+      font-size: 1.05rem;
+      background: #e7f3f5;
+      color: var(--primary-dark);
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(0, 95, 115, 0.24);
+    }
+
+    .demo-link-btn {
+      min-width: 180px;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      background: var(--primary-dark);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(0, 61, 73, 0.2);
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .status-pill {
+      background: #eaf7ea;
+      color: var(--success);
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .status-pill.error {
+      background: #fdecec;
+      color: var(--danger);
+    }
+
+    .question {
+      margin: 0 0 18px;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+      color: var(--primary-dark);
+    }
+
+    .instructions {
+      margin: 0 0 18px;
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .doctor-status-banner {
+      margin: 0 0 24px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      font-size: 1.08rem;
+      font-weight: 700;
+      background: #e8f7ec;
+      color: var(--success);
+      border: 2px solid #cae8d1;
+    }
+
+    .doctor-status-banner.warning {
+      background: #fff3e6;
+      color: var(--warning);
+      border-color: #f6d19c;
+    }
+
+    .doctor-status-banner.danger {
+      background: #fdecec;
+      color: var(--danger);
+      border-color: #f6c5c5;
+    }
+
+    .doctor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .doctor-btn {
+      padding: 22px 18px;
+      min-height: 110px;
+      background: #f7fbfc;
+      color: var(--primary-dark);
+      border: 3px solid #d5ebef;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+
+    .doctor-btn.unavailable {
+      background: #fff4f4;
+      border-color: #f1caca;
+      color: #8a1c1c;
+    }
+
+    .doctor-btn.selected {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(0, 95, 115, 0.22);
+    }
+
+    .doctor-btn small {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--primary-dark);
+    }
+
+    .text-input {
+      width: 100%;
+      min-height: 78px;
+      border-radius: 18px;
+      border: 3px solid #d9e2ec;
+      padding: 18px 20px;
+      font-size: 1.4rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    .text-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(238, 155, 0, 0.18);
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .action-btn {
+      min-height: 78px;
+      padding: 18px 24px;
+      font-size: 1.3rem;
+      min-width: 210px;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: #1b1b1b;
+    }
+
+    .secondary-btn {
+      background: #dff1f4;
+      color: var(--primary-dark);
+    }
+
+    .result-card {
+      display: none;
+      background: linear-gradient(180deg, #f7fffb 0%, #edf9f0 100%);
+      border: 3px solid #cde8d2;
+      border-radius: 22px;
+      padding: 24px;
+      gap: 14px;
+    }
+
+    .result-card.show {
+      display: grid;
+    }
+
+    .result-title {
+      margin: 0;
+      color: var(--success);
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+    }
+
+    .result-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .result-item {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 18px;
+      padding: 18px;
+      border: 2px solid #dbeee0;
+    }
+
+    .result-label {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .result-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      word-break: break-word;
+    }
+
+    .foot-note {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+
+    .doctor-btn:hover,
+    .lang-btn:hover,
+    .action-btn:hover,
+    .demo-link-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero,
+      .panel {
+        padding: 20px;
+      }
+
+      .action-btn,
+      .lang-btn,
+      .demo-link-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div>
+        <h1 class="title">Voice-Guided Smart Queue Management System</h1>
+        <p class="subtitle">Hospital patient kiosk designed for elderly and non-technical users.</p>
+      </div>
+      <div class="lang-switcher" id="langSwitcher" aria-label="Language selector"></div>
+    </section>
+
+    <section class="panel">
+      <div class="status-bar">
+        <div class="status-pill" id="voiceStatus">Voice guidance is starting...</div>
+        <div class="status-pill" id="dbStatus">Connecting to Firestore...</div>
+      </div>
+
+      <h2 class="question" id="questionText">à°¸à±à°µà°¾à°—à°¤à°‚. à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?</h2>
+      <p class="instructions" id="instructionText">à°®à°¾à°Ÿà±à°²à°¾à°¡à°‚à°¡à°¿. à°µà°¾à°¯à°¿à°¸à± à°ªà°¨à°¿ à°šà±‡à°¯à°•à°ªà±‹à°¤à±‡ à°•à±à°°à°¿à°‚à°¦ à°‰à°¨à±à°¨ à°ªà±†à°¦à±à°¦ à°¬à°Ÿà°¨à±à°²à°¨à± à°µà°¾à°¡à°‚à°¡à°¿.</p>
+      <div class="doctor-status-banner" id="doctorStatusBanner">à°¡à°¾à°•à±à°Ÿà°°à±à°²à± à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±.</div>
+
+      <div id="fallbackPanel">
+        <div class="doctor-grid" id="doctorGrid"></div>
+
+        <label class="field-label" for="patientNameInput" id="nameLabel">à°®à±€ à°ªà±‡à°°à± à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿</label>
+        <input
+          class="text-input"
+          id="patientNameInput"
+          type="text"
+          autocomplete="name"
+          placeholder="à°‰à°¦à°¾à°¹à°°à°£: à°°à°®à±‡à°·à±"
+          aria-label="Patient name"
+        />
+
+        <div class="actions">
+          <button class="action-btn primary-btn" id="continueBtn">à°•à±Šà°¨à°¸à°¾à°—à°¿à°‚à°šà°‚à°¡à°¿</button>
+          <button class="action-btn secondary-btn" id="retryVoiceBtn">à°®à°³à±à°²à±€ à°µà°¾à°¯à°¿à°¸à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿</button>
+          <button class="action-btn secondary-btn" id="restartBtn">à°®à°³à±à°²à±€ à°ªà±à°°à°¾à°°à°‚à°­à°¿à°‚à°šà°‚à°¡à°¿</button>
+        </div>
+      </div>
+
+      <div class="result-card" id="resultCard" aria-live="polite">
+        <h3 class="result-title" id="resultTitle">à°¨à°®à±‹à°¦à± à°ªà±‚à°°à±à°¤à±ˆà°‚à°¦à°¿</h3>
+        <div class="result-grid">
+          <div class="result-item">
+            <div class="result-label" id="doctorResultLabel">à°¡à°¾à°•à±à°Ÿà°°à±</div>
+            <div class="result-value" id="doctorResultValue">-</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label" id="patientResultLabel">à°°à±‹à°—à°¿ à°ªà±‡à°°à±</div>
+            <div class="result-value" id="patientResultValue">-</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label" id="tokenResultLabel">à°Ÿà±‹à°•à±†à°¨à± à°¨à°‚à°¬à°°à±</div>
+            <div class="result-value" id="tokenResultValue">-</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label" id="waitResultLabel">à°…à°‚à°šà°¨à°¾ à°µà±‡à°šà°¿à°šà±‚à°¡à°¾à°²à±à°¸à°¿à°¨ à°¸à°®à°¯à°‚</div>
+            <div class="result-value" id="waitResultValue">-</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label" id="timeResultLabel">à°…à°‚à°šà°¨à°¾ à°¸à±‡à°µà°¾ à°¸à°®à°¯à°‚</div>
+            <div class="result-value" id="timeResultValue">-</div>
+          </div>
+        </div>
+        <p class="foot-note" id="resultFootNote">à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿. à°¡à°¾à°•à±à°Ÿà°°à± à°¸à±à°•à±à°°à±€à°¨à±â€Œà°²à±‹ à°®à±€ à°¸à±à°¥à°¿à°¤à°¿ à°ªà±à°°à°¤à±à°¯à°•à±à°·à°‚à°—à°¾ à°•à°¨à°¿à°ªà°¿à°¸à±à°¤à±à°‚à°¦à°¿.</p>
+        <div class="actions">
+          <button class="action-btn secondary-btn" id="newPatientBtn">à°¤à°¦à±à°ªà°°à°¿ à°°à±‹à°—à°¿à°¨à°¿ à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, doc, getDocs, runTransaction, setDoc, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    import { firebaseConfig } from "./firebase-config.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const DEFAULT_DOCTORS = [
+      { id: "general", name: "Dr. S. Rao", speciality: "General Medicine" },
+      { id: "cardiology", name: "Dr. A. Kumar", speciality: "Cardiology" },
+      { id: "orthopedics", name: "Dr. P. Lakshmi", speciality: "Orthopedics" },
+      { id: "pediatrics", name: "Dr. N. Sharma", speciality: "Pediatrics" }
+    ];
+
+    const LANGUAGES = {
+      te: {
+        code: "te-IN",
+        ttsCode: "te",
+        label: "à°¤à±†à°²à±à°—à±",
+        welcome: "à°¸à±à°µà°¾à°—à°¤à°‚. à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?",
+        askDoctor: "à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?",
+        askName: "à°¦à°¯à°šà±‡à°¸à°¿ à°®à±€ à°ªà±‡à°°à± à°šà±†à°ªà±à°ªà°‚à°¡à°¿.",
+        unclearDoctor: "à°®à±€à°°à± à°šà±†à°ªà±à°ªà°¿à°¨ à°¡à°¾à°•à±à°Ÿà°°à± à°¸à±à°ªà°·à±à°Ÿà°‚à°—à°¾ à°…à°°à±à°¥à°‚ à°•à°¾à°²à±‡à°¦à±. à°¦à°¯à°šà±‡à°¸à°¿ à°¬à°Ÿà°¨à±â€Œà°¨à± à°¨à±Šà°•à±à°•à°‚à°¡à°¿.",
+        unclearName: "à°®à±€ à°ªà±‡à°°à± à°¸à±à°ªà°·à±à°Ÿà°‚à°—à°¾ à°µà°¿à°¨à°¿à°ªà°¿à°‚à°šà°²à±‡à°¦à±. à°¦à°¯à°šà±‡à°¸à°¿ à°Ÿà±ˆà°ªà± à°šà±‡à°¯à°‚à°¡à°¿ à°²à±‡à°¦à°¾ à°®à°³à±à°²à±€ à°®à°¾à°Ÿà±à°²à°¾à°¡à°‚à°¡à°¿.",
+        continueText: "à°•à±Šà°¨à°¸à°¾à°—à°¿à°‚à°šà°‚à°¡à°¿",
+        retryVoice: "à°®à°³à±à°²à±€ à°µà°¾à°¯à°¿à°¸à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿",
+        restart: "à°®à°³à±à°²à±€ à°ªà±à°°à°¾à°°à°‚à°­à°¿à°‚à°šà°‚à°¡à°¿",
+        nextPatient: "à°¤à°¦à±à°ªà°°à°¿ à°°à±‹à°—à°¿à°¨à°¿ à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿",
+        nameLabel: "à°®à±€ à°ªà±‡à°°à± à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿",
+        namePlaceholder: "à°‰à°¦à°¾à°¹à°°à°£: à°°à°®à±‡à°·à±",
+        resultTitle: "à°¨à°®à±‹à°¦à± à°ªà±‚à°°à±à°¤à±ˆà°‚à°¦à°¿",
+        doctorLabel: "à°¡à°¾à°•à±à°Ÿà°°à±",
+        patientLabel: "à°°à±‹à°—à°¿ à°ªà±‡à°°à±",
+        tokenLabel: "à°Ÿà±‹à°•à±†à°¨à± à°¨à°‚à°¬à°°à±",
+        waitLabel: "à°…à°‚à°šà°¨à°¾ à°µà±‡à°šà°¿à°šà±‚à°¡à°¾à°²à±à°¸à°¿à°¨ à°¸à°®à°¯à°‚",
+        timeLabel: "à°…à°‚à°šà°¨à°¾ à°¸à±‡à°µà°¾ à°¸à°®à°¯à°‚",
+        footNote: "à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿. à°¡à°¾à°•à±à°Ÿà°°à± à°¸à±à°•à±à°°à±€à°¨à±â€Œà°²à±‹ à°®à±€ à°¸à±à°¥à°¿à°¤à°¿ à°ªà±à°°à°¤à±à°¯à°•à±à°·à°‚à°—à°¾ à°•à°¨à°¿à°ªà°¿à°¸à±à°¤à±à°‚à°¦à°¿.",
+        speakResult: ({ token, waitMinutes }) => `à°®à±€ à°Ÿà±‹à°•à±†à°¨à± à°¨à°‚à°¬à°°à± ${token}. à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿. à°¸à±à°®à°¾à°°à± ${waitMinutes} à°¨à°¿à°®à°¿à°·à°¾à°²à±à°²à±‹ à°®à±€ à°µà°‚à°¤à± à°µà°¸à±à°¤à±à°‚à°¦à°¿.`,
+        voiceReady: "à°µà°¾à°¯à°¿à°¸à± à°¸à°¹à°¾à°¯à°‚ à°¸à°¿à°¦à±à°§à°‚à°—à°¾ à°‰à°‚à°¦à°¿",
+        voiceFallback: "à°µà°¾à°¯à°¿à°¸à± à°ªà°¨à°¿ à°šà±‡à°¯à°•à°ªà±‹à°¤à±‡ à°¬à°Ÿà°¨à±à°²à°¨à± à°µà°¾à°¡à°‚à°¡à°¿",
+        dbReady: "Firestore à°•à°¨à±†à°•à±à°Ÿà± à°…à°¯à°¿à°‚à°¦à°¿",
+        dbError: "Firestore à°•à°¨à±†à°•à±à°·à°¨à± à°²à±‹à°ªà°‚",
+        question: "à°¸à±à°µà°¾à°—à°¤à°‚. à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?",
+        instruction: "à°®à°¾à°Ÿà±à°²à°¾à°¡à°‚à°¡à°¿. à°µà°¾à°¯à°¿à°¸à± à°ªà°¨à°¿ à°šà±‡à°¯à°•à°ªà±‹à°¤à±‡ à°•à±à°°à°¿à°‚à°¦ à°‰à°¨à±à°¨ à°ªà±†à°¦à±à°¦ à°¬à°Ÿà°¨à±à°²à°¨à± à°µà°¾à°¡à°‚à°¡à°¿.",
+        chooseDoctor: "à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿.",
+        availableBanner: "à°¡à°¾à°•à±à°Ÿà°°à±à°²à± à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±.",
+        usingOnlineVoice: "à°¤à±†à°²à±à°—à± à°µà°¾à°¯à°¿à°¸à± à°•à±‹à°¸à°‚ à°†à°¨à±â€Œà°²à±ˆà°¨à± à°†à°¡à°¿à°¯à±‹ à°¸à°¹à°¾à°¯à°‚ à°µà°¾à°¡à±à°¤à±à°¨à±à°¨à°¾à°®à±.",
+        tapToEnableVoice: "à°’à°•à°¸à°¾à°°à°¿ à°¸à±à°•à±à°°à±€à°¨à±â€Œà°ªà±ˆ à°¨à±Šà°•à±à°•à°¿ à°®à°³à±à°²à±€ à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿.",
+        alerts: {
+          chooseDoctor: "à°¦à°¯à°šà±‡à°¸à°¿ à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿.",
+          enterName: "à°¦à°¯à°šà±‡à°¸à°¿ à°®à±€ à°ªà±‡à°°à± à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿."
+        }
+      },
+      en: {
+        code: "en-IN",
+        ttsCode: "en",
+        label: "English",
+        welcome: "Welcome. Which doctor would you like to meet?",
+        askDoctor: "Which doctor would you like to meet?",
+        askName: "Please say your name.",
+        unclearDoctor: "I could not understand the doctor name clearly. Please tap a button.",
+        unclearName: "I could not understand your name clearly. Please type it or try voice again.",
+        continueText: "Continue",
+        retryVoice: "Retry Voice",
+        restart: "Start Again",
+        nextPatient: "Register Next Patient",
+        nameLabel: "Enter patient name",
+        namePlaceholder: "Example: Ramesh",
+        resultTitle: "Registration Completed",
+        doctorLabel: "Doctor",
+        patientLabel: "Patient",
+        tokenLabel: "Token Number",
+        waitLabel: "Estimated Wait",
+        timeLabel: "Expected Service Time",
+        footNote: "Please stay seated. Your status will update on the doctor dashboard in real time.",
+        speakResult: ({ token, waitMinutes }) => `Your token number is ${token}. Please be seated. Your turn is expected in about ${waitMinutes} minutes.`,
+        voiceReady: "Voice guidance is ready",
+        voiceFallback: "Use the large buttons if voice is unavailable",
+        dbReady: "Firestore connected",
+        dbError: "Firestore connection error",
+        question: "Welcome. Which doctor would you like to meet?",
+        instruction: "Speak now. If voice does not work, use the large buttons below.",
+        chooseDoctor: "Please choose a doctor.",
+        availableBanner: "Doctors are currently available.",
+        usingOnlineVoice: "Using online audio support for Telugu speech.",
+        tapToEnableVoice: "Tap once on the screen, then retry voice.",
+        alerts: {
+          chooseDoctor: "Please choose a doctor.",
+          enterName: "Please enter the patient name."
+        }
+      },
+      hi: {
+        code: "hi-IN",
+        ttsCode: "hi",
+        label: "à¤¹à¤¿à¤‚à¤¦à¥€",
+        welcome: "à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤¹à¥ˆà¥¤ à¤†à¤ª à¤•à¤¿à¤¸ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¸à¥‡ à¤®à¤¿à¤²à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?",
+        askDoctor: "à¤†à¤ª à¤•à¤¿à¤¸ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¸à¥‡ à¤®à¤¿à¤²à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?",
+        askName: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤…à¤ªà¤¨à¤¾ à¤¨à¤¾à¤® à¤¬à¤¤à¤¾à¤‡à¤à¥¤",
+        unclearDoctor: "à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤•à¤¾ à¤¨à¤¾à¤® à¤¸à¤¾à¤«à¤¼ à¤¸à¤®à¤ à¤¨à¤¹à¥€à¤‚ à¤†à¤¯à¤¾à¥¤ à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¤Ÿà¤¨ à¤¦à¤¬à¤¾à¤‡à¤à¥¤",
+        unclearName: "à¤†à¤ªà¤•à¤¾ à¤¨à¤¾à¤® à¤¸à¤¾à¤«à¤¼ à¤¸à¥à¤¨à¤¾à¤ˆ à¤¨à¤¹à¥€à¤‚ à¤¦à¤¿à¤¯à¤¾à¥¤ à¤•à¥ƒà¤ªà¤¯à¤¾ à¤Ÿà¤¾à¤‡à¤ª à¤•à¤°à¥‡à¤‚ à¤¯à¤¾ à¤«à¤¿à¤° à¤¸à¥‡ à¤¬à¥‹à¤²à¥‡à¤‚à¥¤",
+        continueText: "à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚",
+        retryVoice: "à¤«à¤¿à¤° à¤¸à¥‡ à¤µà¥‰à¤‡à¤¸",
+        restart: "à¤«à¤¿à¤° à¤¸à¥‡ à¤¶à¥à¤°à¥‚ à¤•à¤°à¥‡à¤‚",
+        nextPatient: "à¤…à¤—à¤²à¤¾ à¤®à¤°à¥€à¤œ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚",
+        nameLabel: "à¤®à¤°à¥€à¤œ à¤•à¤¾ à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚",
+        namePlaceholder: "à¤‰à¤¦à¤¾à¤¹à¤°à¤£: à¤°à¤®à¥‡à¤¶",
+        resultTitle: "à¤ªà¤‚à¤œà¥€à¤•à¤°à¤£ à¤ªà¥‚à¤°à¤¾ à¤¹à¥à¤†",
+        doctorLabel: "à¤¡à¥‰à¤•à¥à¤Ÿà¤°",
+        patientLabel: "à¤®à¤°à¥€à¤œ",
+        tokenLabel: "à¤Ÿà¥‹à¤•à¤¨ à¤¨à¤‚à¤¬à¤°",
+        waitLabel: "à¤…à¤¨à¥à¤®à¤¾à¤¨à¤¿à¤¤ à¤ªà¥à¤°à¤¤à¥€à¤•à¥à¤·à¤¾ à¤¸à¤®à¤¯",
+        timeLabel: "à¤…à¤¨à¥à¤®à¤¾à¤¨à¤¿à¤¤ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¯",
+        footNote: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¥ˆà¤ à¤¿à¤à¥¤ à¤†à¤ªà¤•à¥€ à¤¸à¥à¤¥à¤¿à¤¤à¤¿ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¡à¥ˆà¤¶à¤¬à¥‹à¤°à¥à¤¡ à¤ªà¤° à¤¤à¥à¤°à¤‚à¤¤ à¤¦à¤¿à¤–à¥‡à¤—à¥€à¥¤",
+        speakResult: ({ token, waitMinutes }) => `à¤†à¤ªà¤•à¤¾ à¤Ÿà¥‹à¤•à¤¨ à¤¨à¤‚à¤¬à¤° ${token} à¤¹à¥ˆà¥¤ à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¥ˆà¤ à¤¿à¤à¥¤ à¤²à¤—à¤­à¤— ${waitMinutes} à¤®à¤¿à¤¨à¤Ÿ à¤®à¥‡à¤‚ à¤†à¤ªà¤•à¥€ à¤¬à¤¾à¤°à¥€ à¤†à¤à¤—à¥€à¥¤`,
+        voiceReady: "à¤µà¥‰à¤‡à¤¸ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤¤à¥ˆà¤¯à¤¾à¤° à¤¹à¥ˆ",
+        voiceFallback: "à¤¯à¤¦à¤¿ à¤µà¥‰à¤‡à¤¸ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨ à¤¹à¥‹ à¤¤à¥‹ à¤¬à¤¡à¤¼à¥‡ à¤¬à¤Ÿà¤¨ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤•à¤°à¥‡à¤‚",
+        dbReady: "Firestore à¤œà¥à¤¡à¤¼ à¤—à¤¯à¤¾",
+        dbError: "Firestore à¤•à¤¨à¥‡à¤•à¥à¤¶à¤¨ à¤¤à¥à¤°à¥à¤Ÿà¤¿",
+        question: "à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤¹à¥ˆà¥¤ à¤†à¤ª à¤•à¤¿à¤¸ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¸à¥‡ à¤®à¤¿à¤²à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?",
+        instruction: "à¤…à¤¬ à¤¬à¥‹à¤²à¤¿à¤à¥¤ à¤¯à¤¦à¤¿ à¤µà¥‰à¤‡à¤¸ à¤•à¤¾à¤® à¤¨ à¤•à¤°à¥‡ à¤¤à¥‹ à¤¨à¥€à¤šà¥‡ à¤•à¥‡ à¤¬à¤¡à¤¼à¥‡ à¤¬à¤Ÿà¤¨ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤•à¤°à¥‡à¤‚à¥¤",
+        chooseDoctor: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤šà¥à¤¨à¥‡à¤‚à¥¤",
+        availableBanner: "à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¹à¥ˆà¤‚à¥¤",
+        usingOnlineVoice: "à¤¤à¥‡à¤²à¥à¤—à¥ à¤†à¤µà¤¾à¤œà¤¼ à¤•à¥‡ à¤²à¤¿à¤ à¤‘à¤¨à¤²à¤¾à¤‡à¤¨ à¤‘à¤¡à¤¿à¤¯à¥‹ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤¹à¥‹ à¤°à¤¹à¥€ à¤¹à¥ˆà¥¤",
+        tapToEnableVoice: "à¤¸à¥à¤•à¥à¤°à¥€à¤¨ à¤ªà¤° à¤à¤• à¤¬à¤¾à¤° à¤Ÿà¥ˆà¤ª à¤•à¤°à¥‡à¤‚ à¤”à¤° à¤«à¤¿à¤° à¤¸à¥‡ à¤ªà¥à¤°à¤¯à¤¾à¤¸ à¤•à¤°à¥‡à¤‚à¥¤",
+        alerts: {
+          chooseDoctor: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤šà¥à¤¨à¥‡à¤‚à¥¤",
+          enterName: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤®à¤°à¥€à¤œ à¤•à¤¾ à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚à¥¤"
+        }
+      }
+    };
+
+    const AVG_MINUTES_PER_PATIENT = 5;
+    const BREAK_DELAY_MINUTES = 20;
+    const SURGERY_DELAY_MINUTES = 90;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const state = {
+      language: "te",
+      doctors: [...DEFAULT_DOCTORS],
+      doctorStatuses: {},
+      selectedDoctorId: "",
+      selectedDoctorName: "",
+      patientName: "",
+      isListening: false
+    };
+
+    const fallbackAudio = new Audio();
+
+    const els = {
+      langSwitcher: document.getElementById("langSwitcher"),
+      doctorGrid: document.getElementById("doctorGrid"),
+      patientNameInput: document.getElementById("patientNameInput"),
+      continueBtn: document.getElementById("continueBtn"),
+      retryVoiceBtn: document.getElementById("retryVoiceBtn"),
+      restartBtn: document.getElementById("restartBtn"),
+      newPatientBtn: document.getElementById("newPatientBtn"),
+      questionText: document.getElementById("questionText"),
+      instructionText: document.getElementById("instructionText"),
+      doctorStatusBanner: document.getElementById("doctorStatusBanner"),
+      nameLabel: document.getElementById("nameLabel"),
+      voiceStatus: document.getElementById("voiceStatus"),
+      dbStatus: document.getElementById("dbStatus"),
+      resultCard: document.getElementById("resultCard"),
+      resultTitle: document.getElementById("resultTitle"),
+      doctorResultLabel: document.getElementById("doctorResultLabel"),
+      doctorResultValue: document.getElementById("doctorResultValue"),
+      patientResultLabel: document.getElementById("patientResultLabel"),
+      patientResultValue: document.getElementById("patientResultValue"),
+      tokenResultLabel: document.getElementById("tokenResultLabel"),
+      tokenResultValue: document.getElementById("tokenResultValue"),
+      waitResultLabel: document.getElementById("waitResultLabel"),
+      waitResultValue: document.getElementById("waitResultValue"),
+      timeResultLabel: document.getElementById("timeResultLabel"),
+      timeResultValue: document.getElementById("timeResultValue"),
+      resultFootNote: document.getElementById("resultFootNote")
+    };
+
+    function t(key, params) {
+      const value = LANGUAGES[state.language][key];
+      return typeof value === "function" ? value(params) : value;
+    }
+
+    function renderLanguageButtons() {
+      els.langSwitcher.innerHTML = "";
+
+      const doctorAccessBtn = document.createElement("button");
+      doctorAccessBtn.className = "demo-link-btn";
+      doctorAccessBtn.type = "button";
+      doctorAccessBtn.textContent = "Doctor Login";
+      doctorAccessBtn.addEventListener("click", () => {
+        window.open("doctor.html", "_blank", "noopener,noreferrer");
+      });
+      els.langSwitcher.appendChild(doctorAccessBtn);
+
+      Object.entries(LANGUAGES).forEach(([id, lang]) => {
+        const btn = document.createElement("button");
+        btn.className = `lang-btn ${state.language === id ? "active" : ""}`;
+        btn.type = "button";
+        btn.textContent = lang.label;
+        btn.addEventListener("click", () => {
+          state.language = id;
+          renderLanguageButtons();
+          refreshLanguageContent();
+          renderDoctors();
+          updateDoctorStatusBanner();
+          speak(t("welcome"));
+        });
+        els.langSwitcher.appendChild(btn);
+      });
+    }
+
+    function refreshLanguageContent() {
+      els.questionText.textContent = t("question");
+      els.instructionText.textContent = t("instruction");
+      els.nameLabel.textContent = t("nameLabel");
+      els.patientNameInput.placeholder = t("namePlaceholder");
+      els.continueBtn.textContent = t("continueText");
+      els.retryVoiceBtn.textContent = t("retryVoice");
+      els.restartBtn.textContent = t("restart");
+      els.newPatientBtn.textContent = t("nextPatient");
+      els.resultTitle.textContent = t("resultTitle");
+      els.doctorResultLabel.textContent = t("doctorLabel");
+      els.patientResultLabel.textContent = t("patientLabel");
+      els.tokenResultLabel.textContent = t("tokenLabel");
+      els.waitResultLabel.textContent = t("waitLabel");
+      els.timeResultLabel.textContent = t("timeLabel");
+      els.resultFootNote.textContent = t("footNote");
+      els.voiceStatus.textContent = SpeechRecognition ? t("voiceReady") : t("voiceFallback");
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString("en-IN", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+      });
+    }
+
+    function formatWaitMinutes(minutes) {
+      if (state.language === "te") return `${minutes} à°¨à°¿à°®à°¿à°·à°¾à°²à±`;
+      if (state.language === "hi") return `${minutes} à¤®à¤¿à¤¨à¤Ÿ`;
+      return `${minutes} minutes`;
+    }
+
+    function getDoctorDelayMinutes(status) {
+      if (status === "break") return BREAK_DELAY_MINUTES;
+      if (status === "surgery") return SURGERY_DELAY_MINUTES;
+      return 0;
+    }
+
+    function getDoctorAvailability(doctorId) {
+      const statusData = state.doctorStatuses[doctorId] || {};
+      const baseAvailability = statusData.availability || "available";
+      const hasManualOverride = Boolean(
+        statusData.manualAvailableOverrideAt &&
+        (!statusData.availableUntil || new Date(statusData.manualAvailableOverrideAt).getTime() > getTodayCutoffTime(statusData.availableUntil))
+      );
+      if (baseAvailability === "available" && statusData.availableUntil && !hasFutureAvailableUntil(statusData.availableUntil) && !hasManualOverride) {
+        return "unavailable";
+      }
+      return baseAvailability;
+    }
+
+    function getAvailabilityLabel(status) {
+      if (state.language === "te") {
+        if (status === "break") return "à°¸à±à°¥à°¿à°¤à°¿: à°µà°¿à°°à°¾à°®à°‚à°²à±‹";
+        if (status === "surgery") return "à°¸à±à°¥à°¿à°¤à°¿: à°¶à°¸à±à°¤à±à°°à°šà°¿à°•à°¿à°¤à±à°¸à°²à±‹";
+        if (status === "signedoff") return "à°¸à±à°¥à°¿à°¤à°¿: à°ˆà°°à±‹à°œà±à°•à± à°¸à±†à°²à°µà±";
+        if (status === "unavailable") return "à°¸à±à°¥à°¿à°¤à°¿: à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°²à±‡à°°à±";
+        return "à°¸à±à°¥à°¿à°¤à°¿: à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹";
+      }
+      if (state.language === "hi") {
+        if (status === "break") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤¬à¥à¤°à¥‡à¤• à¤ªà¤°";
+        if (status === "surgery") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤¸à¤°à¥à¤œà¤°à¥€ à¤®à¥‡à¤‚";
+        if (status === "signedoff") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤†à¤œ à¤…à¤µà¤•à¤¾à¤¶ à¤ªà¤°";
+        if (status === "unavailable") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚";
+        return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤‰à¤ªà¤²à¤¬à¥à¤§";
+      }
+      if (status === "break") return "Status: On Break";
+      if (status === "surgery") return "Status: In Surgery";
+      if (status === "signedoff") return "Status: Signed Off Today";
+      if (status === "unavailable") return "Status: Unavailable";
+      return "Status: Available";
+    }
+
+    function getUnavailableDoctorMessage(doctorName, status) {
+      const schedule = state.doctorStatuses[state.selectedDoctorId] || {};
+      const extra = buildAvailabilityText(schedule, { includeTodayUntil: false });
+      if (state.language === "te") {
+        if (status === "break") return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°µà°¿à°°à°¾à°®à°‚à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±. à°•à°¨à±€à°¸à°‚ ${BREAK_DELAY_MINUTES} à°¨à°¿à°®à°¿à°·à°¾à°² à°†à°²à°¸à±à°¯à°‚ à°‰à°‚à°Ÿà±à°‚à°¦à°¿. ${extra}`.trim();
+        if (status === "surgery") return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°¶à°¸à±à°¤à±à°°à°šà°¿à°•à°¿à°¤à±à°¸à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±. à°•à°¨à±€à°¸à°‚ 1 à°¨à±à°‚à°šà°¿ 2 à°—à°‚à°Ÿà°² à°†à°²à°¸à±à°¯à°‚ à°‰à°‚à°Ÿà±à°‚à°¦à°¿. ${extra}`.trim();
+        if (status === "signedoff") return `${doctorName} à°ˆà°°à±‹à°œà±à°•à± à°¸à±‡à°µà°²à± à°®à±à°—à°¿à°‚à°šà°¾à°°à±. ${extra}`.trim();
+        if (status === "unavailable") return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°²à±‡à°°à±. ${extra}`.trim();
+        return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°²à±‡à°°à±.`;
+      }
+      if (state.language === "hi") {
+        if (status === "break") return `${doctorName} à¤…à¤­à¥€ à¤¬à¥à¤°à¥‡à¤• à¤ªà¤° à¤¹à¥ˆà¤‚à¥¤ à¤•à¤® à¤¸à¥‡ à¤•à¤® ${BREAK_DELAY_MINUTES} à¤®à¤¿à¤¨à¤Ÿ à¤•à¥€ à¤¦à¥‡à¤°à¥€ à¤¹à¥‹à¤—à¥€à¥¤ ${extra}`.trim();
+        if (status === "surgery") return `${doctorName} à¤…à¤­à¥€ à¤¸à¤°à¥à¤œà¤°à¥€ à¤®à¥‡à¤‚ à¤¹à¥ˆà¤‚à¥¤ à¤•à¤® à¤¸à¥‡ à¤•à¤® 1 à¤¸à¥‡ 2 à¤˜à¤‚à¤Ÿà¥‡ à¤•à¥€ à¤¦à¥‡à¤°à¥€ à¤¹à¥‹à¤—à¥€à¥¤ ${extra}`.trim();
+        if (status === "signedoff") return `${doctorName} à¤¨à¥‡ à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ à¤¸à¥‡à¤µà¤¾ à¤¬à¤‚à¤¦ à¤•à¤° à¤¦à¥€ à¤¹à¥ˆà¥¤ ${extra}`.trim();
+        if (status === "unavailable") return `${doctorName} à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¤‚à¥¤ ${extra}`.trim();
+        return `${doctorName} à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¤‚à¥¤`;
+      }
+      if (status === "break") return `${doctorName} is currently on break. There will be at least a ${BREAK_DELAY_MINUTES}-minute delay. ${extra}`.trim();
+      if (status === "surgery") return `${doctorName} is currently in surgery. There will be at least a 1 to 2 hour delay. ${extra}`.trim();
+      if (status === "signedoff") return `${doctorName} has signed off for today. ${extra}`.trim();
+      if (status === "unavailable") return `${doctorName} is currently unavailable. ${extra}`.trim();
+      return `${doctorName} is currently unavailable.`;
+    }
+
+    function formatAvailabilityDate(dateValue) {
+      if (!dateValue) return "";
+      return new Date(`${dateValue}T00:00:00`).toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function hasFutureAvailableUntil(timeValue) {
+      if (!timeValue) return false;
+      const now = new Date();
+      const [hours, minutes] = timeValue.split(":").map(Number);
+      if (Number.isNaN(hours) || Number.isNaN(minutes)) return false;
+      const cutoff = new Date();
+      cutoff.setHours(hours, minutes, 0, 0);
+      return cutoff.getTime() > now.getTime();
+    }
+
+    function getTodayCutoffTime(timeValue) {
+      const [hours, minutes] = timeValue.split(":").map(Number);
+      const cutoff = new Date();
+      cutoff.setHours(hours, minutes, 0, 0);
+      return cutoff.getTime();
+    }
+
+    function buildAvailabilityText(schedule, options = {}) {
+      if (!schedule) return "";
+      const includeTodayUntil = options.includeTodayUntil !== false;
+      if (schedule.availabilityMessage) return schedule.availabilityMessage;
+
+      const parts = [];
+      if (includeTodayUntil && schedule.availableUntil && hasFutureAvailableUntil(schedule.availableUntil)) {
+        parts.push(state.language === "te"
+          ? `à°¡à°¾à°•à±à°Ÿà°°à± à°ˆà°°à±‹à°œà± ${schedule.availableUntil} à°µà°°à°•à± à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°‰à°‚à°Ÿà°¾à°°à±`
+          : state.language === "hi"
+            ? `à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤†à¤œ ${schedule.availableUntil} à¤¤à¤• à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤°à¤¹à¥‡à¤‚à¤—à¥‡`
+            : `Doctor is available today until ${schedule.availableUntil}`);
+      }
+      if (schedule.nextAvailableDate || schedule.nextAvailableTime) {
+        const dateText = formatAvailabilityDate(schedule.nextAvailableDate);
+        const timeText = schedule.nextAvailableTime || "";
+        parts.push(state.language === "te"
+          ? `à°¤à°¦à±à°ªà°°à°¿ à°…à°‚à°¦à±à°¬à°¾à°Ÿà± ${dateText} ${timeText}`.trim()
+          : state.language === "hi"
+            ? `à¤…à¤—à¤²à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§à¤¤à¤¾ ${dateText} ${timeText}`.trim()
+            : `Next available ${dateText} ${timeText}`.trim());
+      }
+      return parts.join(". ");
+    }
+
+    function updateDoctorStatusBanner() {
+      const selectedDoctor = state.doctors.find((doctor) => doctor.id === state.selectedDoctorId);
+      const statuses = Object.values(state.doctorStatuses);
+      const unavailableCount = statuses.filter((item) => item.availability && item.availability !== "available").length;
+
+      if (!selectedDoctor) {
+        els.doctorStatusBanner.textContent = unavailableCount ? t("availableBanner") : t("chooseDoctor");
+        els.doctorStatusBanner.className = "doctor-status-banner";
+        return;
+      }
+
+      const availability = getDoctorAvailability(selectedDoctor.id);
+      const scheduleText = buildAvailabilityText(state.doctorStatuses[selectedDoctor.id], {
+        includeTodayUntil: availability === "available"
+      });
+      els.doctorStatusBanner.className = "doctor-status-banner";
+      if (availability === "break") {
+        els.doctorStatusBanner.classList.add("warning");
+        els.doctorStatusBanner.textContent = getUnavailableDoctorMessage(selectedDoctor.name, availability);
+        return;
+      }
+      if (availability === "surgery") {
+        els.doctorStatusBanner.classList.add("danger");
+        els.doctorStatusBanner.textContent = getUnavailableDoctorMessage(selectedDoctor.name, availability);
+        return;
+      }
+      if (availability === "signedoff") {
+        els.doctorStatusBanner.classList.add("danger");
+        els.doctorStatusBanner.textContent = getUnavailableDoctorMessage(selectedDoctor.name, availability);
+        return;
+      }
+      if (availability === "unavailable") {
+        els.doctorStatusBanner.classList.add("danger");
+        els.doctorStatusBanner.textContent = getUnavailableDoctorMessage(selectedDoctor.name, availability);
+        return;
+      }
+      els.doctorStatusBanner.textContent = `${selectedDoctor.name} - ${getAvailabilityLabel("available")}${scheduleText ? `. ${scheduleText}` : ""}`;
+    }
+
+    function renderDoctors() {
+      els.doctorGrid.innerHTML = "";
+      state.doctors.forEach((doctor) => {
+        const availability = getDoctorAvailability(doctor.id);
+        const isUnavailable = availability !== "available";
+        const scheduleText = buildAvailabilityText(state.doctorStatuses[doctor.id], {
+          includeTodayUntil: availability === "available"
+        });
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `doctor-btn ${state.selectedDoctorId === doctor.id ? "selected" : ""} ${isUnavailable ? "unavailable" : ""}`;
+        btn.innerHTML = `${doctor.name}<br><small>${doctor.speciality}</small><small>${getAvailabilityLabel(availability)}</small>${scheduleText ? `<small>${scheduleText}</small>` : ""}`;
+        btn.addEventListener("click", () => {
+          state.selectedDoctorId = doctor.id;
+          state.selectedDoctorName = doctor.name;
+          renderDoctors();
+          updateDoctorStatusBanner();
+        });
+        els.doctorGrid.appendChild(btn);
+      });
+    }
+
+    function getBestVoice(languageCode) {
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices.length) return null;
+
+      const exactMatch = voices.find((voice) => voice.lang === languageCode);
+      if (exactMatch) return exactMatch;
+
+      const prefix = languageCode.split("-")[0].toLowerCase();
+      const partialMatch = voices.find((voice) => voice.lang.toLowerCase().startsWith(prefix));
+      if (partialMatch) return partialMatch;
+
+      return voices.find((voice) => voice.lang.toLowerCase().startsWith("en")) || voices[0];
+    }
+
+    function warmUpVoices() {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.getVoices();
+      }
+    }
+
+    function playOnlineSpeech(message, langCode) {
+      fallbackAudio.pause();
+      fallbackAudio.src = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${langCode}&q=${encodeURIComponent(message)}`;
+      fallbackAudio.play().catch(() => {
+        setVoiceStatus(t("tapToEnableVoice"), true);
+      });
+    }
+
+    function speak(message) {
+      const lang = LANGUAGES[state.language];
+
+      if (!("speechSynthesis" in window)) {
+        playOnlineSpeech(message, lang.ttsCode);
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(message);
+      const voice = getBestVoice(lang.code);
+      const hasNativeVoice = voice && voice.lang.toLowerCase().startsWith(lang.code.split("-")[0].toLowerCase());
+
+      if (state.language === "te" && !hasNativeVoice) {
+        setVoiceStatus(t("usingOnlineVoice"));
+        playOnlineSpeech(message, lang.ttsCode);
+        return;
+      }
+
+      utterance.lang = lang.code;
+      if (voice) utterance.voice = voice;
+      utterance.rate = 0.95;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+      setTimeout(() => window.speechSynthesis.speak(utterance), 120);
+    }
+
+    function setDbStatus(message, isError = false) {
+      els.dbStatus.textContent = message;
+      els.dbStatus.classList.toggle("error", isError);
+    }
+
+    function setVoiceStatus(message, isError = false) {
+      els.voiceStatus.textContent = message;
+      els.voiceStatus.classList.toggle("error", isError);
+    }
+
+    async function seedDoctorsIfNeeded() {
+      const doctorsCollection = collection(db, "doctors");
+      const snapshot = await getDocs(doctorsCollection);
+
+      if (snapshot.empty) {
+        await Promise.all(DEFAULT_DOCTORS.map((doctor) => setDoc(doc(db, "doctors", doctor.id), doctor)));
+        state.doctors = [...DEFAULT_DOCTORS];
+        return;
+      }
+
+      state.doctors = snapshot.docs.map((doctorDoc) => doctorDoc.data());
+    }
+
+    async function seedDoctorStatusesIfNeeded() {
+      const statusCollection = collection(db, "doctorStatus");
+      const snapshot = await getDocs(statusCollection);
+
+      if (snapshot.empty) {
+        await Promise.all(
+          DEFAULT_DOCTORS.map((doctor) =>
+            setDoc(doc(db, "doctorStatus", doctor.id), {
+              doctorId: doctor.id,
+              doctorName: doctor.name,
+              availability: "available",
+              updatedAt: Date.now()
+            })
+          )
+        );
+      }
+    }
+
+    function subscribeToDoctorStatuses() {
+      onSnapshot(collection(db, "doctorStatus"), (snapshot) => {
+        state.doctorStatuses = {};
+        snapshot.forEach((statusDoc) => {
+          state.doctorStatuses[statusDoc.id] = statusDoc.data();
+        });
+        renderDoctors();
+        updateDoctorStatusBanner();
+      });
+    }
+
+    function getRecognition() {
+      if (!SpeechRecognition) return null;
+      const recognition = new SpeechRecognition();
+      recognition.lang = LANGUAGES[state.language].code;
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      return recognition;
+    }
+
+    function findDoctorBySpeech(text) {
+      const normalized = text.toLowerCase();
+      return state.doctors.find((doctor) =>
+        normalized.includes(doctor.name.toLowerCase()) ||
+        normalized.includes(doctor.speciality.toLowerCase()) ||
+        normalized.includes(doctor.id.replace(/_/g, " "))
+      );
+    }
+
+    function listenOnce(promptText) {
+      return new Promise((resolve, reject) => {
+        const recognition = getRecognition();
+        if (!recognition) {
+          reject(new Error("Speech recognition not supported"));
+          return;
+        }
+
+        setVoiceStatus(promptText);
+        recognition.onresult = (event) => resolve(event.results[0][0].transcript.trim());
+        recognition.onerror = () => reject(new Error("Speech recognition failed"));
+        recognition.onnomatch = () => reject(new Error("No speech match"));
+        recognition.start();
+      });
+    }
+
+    async function startVoiceFlow() {
+      if (!SpeechRecognition || state.isListening) {
+        if (!SpeechRecognition) setVoiceStatus(t("voiceFallback"), true);
+        return;
+      }
+
+      state.isListening = true;
+      try {
+        speak(t("askDoctor"));
+        const doctorSpeech = await listenOnce(t("askDoctor"));
+        const matchedDoctor = findDoctorBySpeech(doctorSpeech);
+
+        if (!matchedDoctor) {
+          setVoiceStatus(t("unclearDoctor"), true);
+          speak(t("unclearDoctor"));
+          return;
+        }
+
+        const availability = getDoctorAvailability(matchedDoctor.id);
+        if (availability !== "available") {
+          const message = getUnavailableDoctorMessage(matchedDoctor.name, availability);
+          state.selectedDoctorId = matchedDoctor.id;
+          state.selectedDoctorName = matchedDoctor.name;
+          renderDoctors();
+          updateDoctorStatusBanner();
+          setVoiceStatus(message, true);
+          speak(message);
+          return;
+        }
+
+        state.selectedDoctorId = matchedDoctor.id;
+        state.selectedDoctorName = matchedDoctor.name;
+        renderDoctors();
+        updateDoctorStatusBanner();
+
+        speak(t("askName"));
+        const nameSpeech = await listenOnce(t("askName"));
+        if (!nameSpeech) {
+          setVoiceStatus(t("unclearName"), true);
+          speak(t("unclearName"));
+          return;
+        }
+
+        state.patientName = nameSpeech;
+        els.patientNameInput.value = nameSpeech;
+        setVoiceStatus(t("voiceReady"));
+      } catch (error) {
+        setVoiceStatus(t("voiceFallback"), true);
+      } finally {
+        state.isListening = false;
+      }
+    }
+
+    async function createQueueEntry() {
+      const patientName = els.patientNameInput.value.trim();
+      const doctor = state.doctors.find((item) => item.id === state.selectedDoctorId);
+
+      if (!doctor) {
+        alert(LANGUAGES[state.language].alerts.chooseDoctor);
+        return;
+      }
+
+      if (!patientName) {
+        alert(LANGUAGES[state.language].alerts.enterName);
+        els.patientNameInput.focus();
+        return;
+      }
+
+      const availability = getDoctorAvailability(doctor.id);
+      if (availability !== "available") {
+        const message = getUnavailableDoctorMessage(doctor.name, availability);
+        setVoiceStatus(message, true);
+        speak(message);
+        alert(message);
+        return;
+      }
+
+      const queueSnapshot = await getDocs(collection(db, "queues"));
+      const queueEntries = queueSnapshot.docs
+        .map((queueDoc) => ({ id: queueDoc.id, ...queueDoc.data() }))
+        .filter((entry) => entry.doctorId === doctor.id);
+
+      const waitingCount = queueEntries.filter((entry) => entry.status === "waiting").length;
+      const servingCount = queueEntries.filter((entry) => entry.status === "serving").length;
+      const patientsAhead = waitingCount + servingCount;
+      const doctorDelay = getDoctorDelayMinutes(availability);
+      const waitMinutes = (patientsAhead * AVG_MINUTES_PER_PATIENT) + doctorDelay;
+      const expectedTime = new Date(Date.now() + waitMinutes * 60000);
+
+      const tokenNumber = await runTransaction(db, async (transaction) => {
+        const tokenRef = doc(db, "tokens", doctor.id);
+        const tokenSnap = await transaction.get(tokenRef);
+        const lastToken = tokenSnap.exists() ? tokenSnap.data().lastToken || 0 : 0;
+        const nextToken = lastToken + 1;
+
+        transaction.set(tokenRef, {
+          doctorId: doctor.id,
+          doctorName: doctor.name,
+          lastToken: nextToken,
+          updatedAt: Date.now()
+        }, { merge: true });
+
+        return nextToken;
+      });
+
+      const status = servingCount === 0 && waitingCount === 0 ? "serving" : "waiting";
+      await addDoc(collection(db, "queues"), {
+        patientName,
+        doctorId: doctor.id,
+        doctorName: doctor.name,
+        speciality: doctor.speciality,
+        tokenNumber,
+        status,
+        averageMinutesPerPatient: AVG_MINUTES_PER_PATIENT,
+        estimatedWaitMinutes: waitMinutes,
+        expectedServiceTime: expectedTime.toISOString(),
+        createdAt: Date.now()
+      });
+
+      await setDoc(doc(db, "meta", "lastRegistration"), {
+        doctorId: doctor.id,
+        doctorName: doctor.name,
+        patientName,
+        tokenNumber,
+        createdAt: Date.now()
+      }, { merge: true });
+
+      showResult({
+        doctorName: doctor.name,
+        patientName,
+        tokenNumber,
+        waitMinutes,
+        expectedTime
+      });
+    }
+
+    function showResult({ doctorName, patientName, tokenNumber, waitMinutes, expectedTime }) {
+      els.resultCard.classList.add("show");
+      els.doctorResultValue.textContent = doctorName;
+      els.patientResultValue.textContent = patientName;
+      els.tokenResultValue.textContent = tokenNumber;
+      els.waitResultValue.textContent = formatWaitMinutes(waitMinutes);
+      els.timeResultValue.textContent = formatTime(expectedTime);
+      speak(t("speakResult", { token: tokenNumber, waitMinutes }));
+    }
+
+    function resetForm() {
+      state.selectedDoctorId = "";
+      state.selectedDoctorName = "";
+      state.patientName = "";
+      els.patientNameInput.value = "";
+      els.resultCard.classList.remove("show");
+      renderDoctors();
+      refreshLanguageContent();
+      updateDoctorStatusBanner();
+      setVoiceStatus(SpeechRecognition ? t("voiceReady") : t("voiceFallback"));
+    }
+
+    els.continueBtn.addEventListener("click", createQueueEntry);
+    els.retryVoiceBtn.addEventListener("click", startVoiceFlow);
+    els.restartBtn.addEventListener("click", () => {
+      resetForm();
+      speak(t("welcome"));
+      startVoiceFlow();
+    });
+    els.newPatientBtn.addEventListener("click", () => {
+      resetForm();
+      speak(t("welcome"));
+      startVoiceFlow();
+    });
+
+    els.patientNameInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") createQueueEntry();
+    });
+
+    document.addEventListener("click", () => {
+      if (window.speechSynthesis && window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+    }, { once: true });
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = warmUpVoices;
+    }
+
+    setInterval(() => {
+      renderDoctors();
+      updateDoctorStatusBanner();
+    }, 60000);
+
+    async function init() {
+      warmUpVoices();
+      renderLanguageButtons();
+      refreshLanguageContent();
+
+      try {
+        await seedDoctorsIfNeeded();
+        await seedDoctorStatusesIfNeeded();
+        renderDoctors();
+        subscribeToDoctorStatuses();
+        updateDoctorStatusBanner();
+        setDbStatus(t("dbReady"));
+      } catch (error) {
+        console.error(error);
+        setDbStatus(t("dbError"), true);
+      }
+
+      speak(t("welcome"));
+      startVoiceFlow();
+    }
+
+    init();
+  </script>
+</body>
+</html>
+
