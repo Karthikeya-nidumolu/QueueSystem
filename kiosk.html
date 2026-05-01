@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -357,57 +357,57 @@
         <div class="status-pill" id="dbStatus">Connecting to Firestore...</div>
       </div>
 
-      <h2 class="question" id="questionText">à°¸à±à°µà°¾à°—à°¤à°‚. à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?</h2>
-      <p class="instructions" id="instructionText">à°®à°¾à°Ÿà±à°²à°¾à°¡à°‚à°¡à°¿. à°µà°¾à°¯à°¿à°¸à± à°ªà°¨à°¿ à°šà±‡à°¯à°•à°ªà±‹à°¤à±‡ à°•à±à°°à°¿à°‚à°¦ à°‰à°¨à±à°¨ à°ªà±†à°¦à±à°¦ à°¬à°Ÿà°¨à±à°²à°¨à± à°µà°¾à°¡à°‚à°¡à°¿.</p>
-      <div class="doctor-status-banner" id="doctorStatusBanner">à°¡à°¾à°•à±à°Ÿà°°à±à°²à± à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±.</div>
+      <h2 class="question" id="questionText">స్వాగతం. మీరు ఏ డాక్టర్‌ని కలవాలి?</h2>
+      <p class="instructions" id="instructionText">మాట్లాడండి. వాయిస్ పని చేయకపోతే క్రింద ఉన్న పెద్ద బటన్లను వాడండి.</p>
+      <div class="doctor-status-banner" id="doctorStatusBanner">డాక్టర్లు ప్రస్తుతం అందుబాటులో ఉన్నారు.</div>
 
       <div id="fallbackPanel">
         <div class="doctor-grid" id="doctorGrid"></div>
 
-        <label class="field-label" for="patientNameInput" id="nameLabel">à°®à±€ à°ªà±‡à°°à± à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿</label>
+        <label class="field-label" for="patientNameInput" id="nameLabel">మీ పేరు నమోదు చేయండి</label>
         <input
           class="text-input"
           id="patientNameInput"
           type="text"
           autocomplete="name"
-          placeholder="à°‰à°¦à°¾à°¹à°°à°£: à°°à°®à±‡à°·à±"
+          placeholder="ఉదాహరణ: రమేష్"
           aria-label="Patient name"
         />
 
         <div class="actions">
-          <button class="action-btn primary-btn" id="continueBtn">à°•à±Šà°¨à°¸à°¾à°—à°¿à°‚à°šà°‚à°¡à°¿</button>
-          <button class="action-btn secondary-btn" id="retryVoiceBtn">à°®à°³à±à°²à±€ à°µà°¾à°¯à°¿à°¸à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿</button>
-          <button class="action-btn secondary-btn" id="restartBtn">à°®à°³à±à°²à±€ à°ªà±à°°à°¾à°°à°‚à°­à°¿à°‚à°šà°‚à°¡à°¿</button>
+          <button class="action-btn primary-btn" id="continueBtn">కొనసాగించండి</button>
+          <button class="action-btn secondary-btn" id="retryVoiceBtn">మళ్లీ వాయిస్ ప్రయత్నించండి</button>
+          <button class="action-btn secondary-btn" id="restartBtn">మళ్లీ ప్రారంభించండి</button>
         </div>
       </div>
 
       <div class="result-card" id="resultCard" aria-live="polite">
-        <h3 class="result-title" id="resultTitle">à°¨à°®à±‹à°¦à± à°ªà±‚à°°à±à°¤à±ˆà°‚à°¦à°¿</h3>
+        <h3 class="result-title" id="resultTitle">నమోదు పూర్తైంది</h3>
         <div class="result-grid">
           <div class="result-item">
-            <div class="result-label" id="doctorResultLabel">à°¡à°¾à°•à±à°Ÿà°°à±</div>
+            <div class="result-label" id="doctorResultLabel">డాక్టర్</div>
             <div class="result-value" id="doctorResultValue">-</div>
           </div>
           <div class="result-item">
-            <div class="result-label" id="patientResultLabel">à°°à±‹à°—à°¿ à°ªà±‡à°°à±</div>
+            <div class="result-label" id="patientResultLabel">రోగి పేరు</div>
             <div class="result-value" id="patientResultValue">-</div>
           </div>
           <div class="result-item">
-            <div class="result-label" id="tokenResultLabel">à°Ÿà±‹à°•à±†à°¨à± à°¨à°‚à°¬à°°à±</div>
+            <div class="result-label" id="tokenResultLabel">టోకెన్ నంబర్</div>
             <div class="result-value" id="tokenResultValue">-</div>
           </div>
           <div class="result-item">
-            <div class="result-label" id="waitResultLabel">à°…à°‚à°šà°¨à°¾ à°µà±‡à°šà°¿à°šà±‚à°¡à°¾à°²à±à°¸à°¿à°¨ à°¸à°®à°¯à°‚</div>
+            <div class="result-label" id="waitResultLabel">అంచనా వేచిచూడాల్సిన సమయం</div>
             <div class="result-value" id="waitResultValue">-</div>
           </div>
           <div class="result-item">
-            <div class="result-label" id="timeResultLabel">à°…à°‚à°šà°¨à°¾ à°¸à±‡à°µà°¾ à°¸à°®à°¯à°‚</div>
+            <div class="result-label" id="timeResultLabel">అంచనా సేవా సమయం</div>
             <div class="result-value" id="timeResultValue">-</div>
           </div>
         </div>
-        <p class="foot-note" id="resultFootNote">à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿. à°¡à°¾à°•à±à°Ÿà°°à± à°¸à±à°•à±à°°à±€à°¨à±â€Œà°²à±‹ à°®à±€ à°¸à±à°¥à°¿à°¤à°¿ à°ªà±à°°à°¤à±à°¯à°•à±à°·à°‚à°—à°¾ à°•à°¨à°¿à°ªà°¿à°¸à±à°¤à±à°‚à°¦à°¿.</p>
+        <p class="foot-note" id="resultFootNote">దయచేసి కూర్చోండి. డాక్టర్ స్క్రీన్‌లో మీ స్థితి ప్రత్యక్షంగా కనిపిస్తుంది.</p>
         <div class="actions">
-          <button class="action-btn secondary-btn" id="newPatientBtn">à°¤à°¦à±à°ªà°°à°¿ à°°à±‹à°—à°¿à°¨à°¿ à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿</button>
+          <button class="action-btn secondary-btn" id="newPatientBtn">తదుపరి రోగిని నమోదు చేయండి</button>
         </div>
       </div>
     </section>
@@ -433,39 +433,39 @@
       te: {
         code: "te-IN",
         ttsCode: "te",
-        label: "à°¤à±†à°²à±à°—à±",
-        welcome: "à°¸à±à°µà°¾à°—à°¤à°‚. à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?",
-        askDoctor: "à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?",
-        askName: "à°¦à°¯à°šà±‡à°¸à°¿ à°®à±€ à°ªà±‡à°°à± à°šà±†à°ªà±à°ªà°‚à°¡à°¿.",
-        unclearDoctor: "à°®à±€à°°à± à°šà±†à°ªà±à°ªà°¿à°¨ à°¡à°¾à°•à±à°Ÿà°°à± à°¸à±à°ªà°·à±à°Ÿà°‚à°—à°¾ à°…à°°à±à°¥à°‚ à°•à°¾à°²à±‡à°¦à±. à°¦à°¯à°šà±‡à°¸à°¿ à°¬à°Ÿà°¨à±â€Œà°¨à± à°¨à±Šà°•à±à°•à°‚à°¡à°¿.",
-        unclearName: "à°®à±€ à°ªà±‡à°°à± à°¸à±à°ªà°·à±à°Ÿà°‚à°—à°¾ à°µà°¿à°¨à°¿à°ªà°¿à°‚à°šà°²à±‡à°¦à±. à°¦à°¯à°šà±‡à°¸à°¿ à°Ÿà±ˆà°ªà± à°šà±‡à°¯à°‚à°¡à°¿ à°²à±‡à°¦à°¾ à°®à°³à±à°²à±€ à°®à°¾à°Ÿà±à°²à°¾à°¡à°‚à°¡à°¿.",
-        continueText: "à°•à±Šà°¨à°¸à°¾à°—à°¿à°‚à°šà°‚à°¡à°¿",
-        retryVoice: "à°®à°³à±à°²à±€ à°µà°¾à°¯à°¿à°¸à± à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿",
-        restart: "à°®à°³à±à°²à±€ à°ªà±à°°à°¾à°°à°‚à°­à°¿à°‚à°šà°‚à°¡à°¿",
-        nextPatient: "à°¤à°¦à±à°ªà°°à°¿ à°°à±‹à°—à°¿à°¨à°¿ à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿",
-        nameLabel: "à°®à±€ à°ªà±‡à°°à± à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿",
-        namePlaceholder: "à°‰à°¦à°¾à°¹à°°à°£: à°°à°®à±‡à°·à±",
-        resultTitle: "à°¨à°®à±‹à°¦à± à°ªà±‚à°°à±à°¤à±ˆà°‚à°¦à°¿",
-        doctorLabel: "à°¡à°¾à°•à±à°Ÿà°°à±",
-        patientLabel: "à°°à±‹à°—à°¿ à°ªà±‡à°°à±",
-        tokenLabel: "à°Ÿà±‹à°•à±†à°¨à± à°¨à°‚à°¬à°°à±",
-        waitLabel: "à°…à°‚à°šà°¨à°¾ à°µà±‡à°šà°¿à°šà±‚à°¡à°¾à°²à±à°¸à°¿à°¨ à°¸à°®à°¯à°‚",
-        timeLabel: "à°…à°‚à°šà°¨à°¾ à°¸à±‡à°µà°¾ à°¸à°®à°¯à°‚",
-        footNote: "à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿. à°¡à°¾à°•à±à°Ÿà°°à± à°¸à±à°•à±à°°à±€à°¨à±â€Œà°²à±‹ à°®à±€ à°¸à±à°¥à°¿à°¤à°¿ à°ªà±à°°à°¤à±à°¯à°•à±à°·à°‚à°—à°¾ à°•à°¨à°¿à°ªà°¿à°¸à±à°¤à±à°‚à°¦à°¿.",
-        speakResult: ({ token, waitMinutes }) => `à°®à±€ à°Ÿà±‹à°•à±†à°¨à± à°¨à°‚à°¬à°°à± ${token}. à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿. à°¸à±à°®à°¾à°°à± ${waitMinutes} à°¨à°¿à°®à°¿à°·à°¾à°²à±à°²à±‹ à°®à±€ à°µà°‚à°¤à± à°µà°¸à±à°¤à±à°‚à°¦à°¿.`,
-        voiceReady: "à°µà°¾à°¯à°¿à°¸à± à°¸à°¹à°¾à°¯à°‚ à°¸à°¿à°¦à±à°§à°‚à°—à°¾ à°‰à°‚à°¦à°¿",
-        voiceFallback: "à°µà°¾à°¯à°¿à°¸à± à°ªà°¨à°¿ à°šà±‡à°¯à°•à°ªà±‹à°¤à±‡ à°¬à°Ÿà°¨à±à°²à°¨à± à°µà°¾à°¡à°‚à°¡à°¿",
-        dbReady: "Firestore à°•à°¨à±†à°•à±à°Ÿà± à°…à°¯à°¿à°‚à°¦à°¿",
-        dbError: "Firestore à°•à°¨à±†à°•à±à°·à°¨à± à°²à±‹à°ªà°‚",
-        question: "à°¸à±à°µà°¾à°—à°¤à°‚. à°®à±€à°°à± à° à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°•à°²à°µà°¾à°²à°¿?",
-        instruction: "à°®à°¾à°Ÿà±à°²à°¾à°¡à°‚à°¡à°¿. à°µà°¾à°¯à°¿à°¸à± à°ªà°¨à°¿ à°šà±‡à°¯à°•à°ªà±‹à°¤à±‡ à°•à±à°°à°¿à°‚à°¦ à°‰à°¨à±à°¨ à°ªà±†à°¦à±à°¦ à°¬à°Ÿà°¨à±à°²à°¨à± à°µà°¾à°¡à°‚à°¡à°¿.",
-        chooseDoctor: "à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿.",
-        availableBanner: "à°¡à°¾à°•à±à°Ÿà°°à±à°²à± à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±.",
-        usingOnlineVoice: "à°¤à±†à°²à±à°—à± à°µà°¾à°¯à°¿à°¸à± à°•à±‹à°¸à°‚ à°†à°¨à±â€Œà°²à±ˆà°¨à± à°†à°¡à°¿à°¯à±‹ à°¸à°¹à°¾à°¯à°‚ à°µà°¾à°¡à±à°¤à±à°¨à±à°¨à°¾à°®à±.",
-        tapToEnableVoice: "à°’à°•à°¸à°¾à°°à°¿ à°¸à±à°•à±à°°à±€à°¨à±â€Œà°ªà±ˆ à°¨à±Šà°•à±à°•à°¿ à°®à°³à±à°²à±€ à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿.",
+        label: "తెలుగు",
+        welcome: "స్వాగతం. మీరు ఏ డాక్టర్‌ని కలవాలి?",
+        askDoctor: "మీరు ఏ డాక్టర్‌ని కలవాలి?",
+        askName: "దయచేసి మీ పేరు చెప్పండి.",
+        unclearDoctor: "మీరు చెప్పిన డాక్టర్ స్పష్టంగా అర్థం కాలేదు. దయచేసి బటన్‌ను నొక్కండి.",
+        unclearName: "మీ పేరు స్పష్టంగా వినిపించలేదు. దయచేసి టైప్ చేయండి లేదా మళ్లీ మాట్లాడండి.",
+        continueText: "కొనసాగించండి",
+        retryVoice: "మళ్లీ వాయిస్ ప్రయత్నించండి",
+        restart: "మళ్లీ ప్రారంభించండి",
+        nextPatient: "తదుపరి రోగిని నమోదు చేయండి",
+        nameLabel: "మీ పేరు నమోదు చేయండి",
+        namePlaceholder: "ఉదాహరణ: రమేష్",
+        resultTitle: "నమోదు పూర్తైంది",
+        doctorLabel: "డాక్టర్",
+        patientLabel: "రోగి పేరు",
+        tokenLabel: "టోకెన్ నంబర్",
+        waitLabel: "అంచనా వేచిచూడాల్సిన సమయం",
+        timeLabel: "అంచనా సేవా సమయం",
+        footNote: "దయచేసి కూర్చోండి. డాక్టర్ స్క్రీన్‌లో మీ స్థితి ప్రత్యక్షంగా కనిపిస్తుంది.",
+        speakResult: ({ token, waitMinutes }) => `మీ టోకెన్ నంబర్ ${token}. దయచేసి కూర్చోండి. సుమారు ${waitMinutes} నిమిషాల్లో మీ వంతు వస్తుంది.`,
+        voiceReady: "వాయిస్ సహాయం సిద్ధంగా ఉంది",
+        voiceFallback: "వాయిస్ పని చేయకపోతే బటన్లను వాడండి",
+        dbReady: "Firestore కనెక్ట్ అయింది",
+        dbError: "Firestore కనెక్షన్ లోపం",
+        question: "స్వాగతం. మీరు ఏ డాక్టర్‌ని కలవాలి?",
+        instruction: "మాట్లాడండి. వాయిస్ పని చేయకపోతే క్రింద ఉన్న పెద్ద బటన్లను వాడండి.",
+        chooseDoctor: "డాక్టర్‌ని ఎంచుకోండి.",
+        availableBanner: "డాక్టర్లు ప్రస్తుతం అందుబాటులో ఉన్నారు.",
+        usingOnlineVoice: "తెలుగు వాయిస్ కోసం ఆన్‌లైన్ ఆడియో సహాయం వాడుతున్నాము.",
+        tapToEnableVoice: "ఒకసారి స్క్రీన్‌పై నొక్కి మళ్లీ ప్రయత్నించండి.",
         alerts: {
-          chooseDoctor: "à°¦à°¯à°šà±‡à°¸à°¿ à°¡à°¾à°•à±à°Ÿà°°à±â€Œà°¨à°¿ à°Žà°‚à°šà±à°•à±‹à°‚à°¡à°¿.",
-          enterName: "à°¦à°¯à°šà±‡à°¸à°¿ à°®à±€ à°ªà±‡à°°à± à°¨à°®à±‹à°¦à± à°šà±‡à°¯à°‚à°¡à°¿."
+          chooseDoctor: "దయచేసి డాక్టర్‌ని ఎంచుకోండి.",
+          enterName: "దయచేసి మీ పేరు నమోదు చేయండి."
         }
       },
       en: {
@@ -509,39 +509,39 @@
       hi: {
         code: "hi-IN",
         ttsCode: "hi",
-        label: "à¤¹à¤¿à¤‚à¤¦à¥€",
-        welcome: "à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤¹à¥ˆà¥¤ à¤†à¤ª à¤•à¤¿à¤¸ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¸à¥‡ à¤®à¤¿à¤²à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?",
-        askDoctor: "à¤†à¤ª à¤•à¤¿à¤¸ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¸à¥‡ à¤®à¤¿à¤²à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?",
-        askName: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤…à¤ªà¤¨à¤¾ à¤¨à¤¾à¤® à¤¬à¤¤à¤¾à¤‡à¤à¥¤",
-        unclearDoctor: "à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤•à¤¾ à¤¨à¤¾à¤® à¤¸à¤¾à¤«à¤¼ à¤¸à¤®à¤ à¤¨à¤¹à¥€à¤‚ à¤†à¤¯à¤¾à¥¤ à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¤Ÿà¤¨ à¤¦à¤¬à¤¾à¤‡à¤à¥¤",
-        unclearName: "à¤†à¤ªà¤•à¤¾ à¤¨à¤¾à¤® à¤¸à¤¾à¤«à¤¼ à¤¸à¥à¤¨à¤¾à¤ˆ à¤¨à¤¹à¥€à¤‚ à¤¦à¤¿à¤¯à¤¾à¥¤ à¤•à¥ƒà¤ªà¤¯à¤¾ à¤Ÿà¤¾à¤‡à¤ª à¤•à¤°à¥‡à¤‚ à¤¯à¤¾ à¤«à¤¿à¤° à¤¸à¥‡ à¤¬à¥‹à¤²à¥‡à¤‚à¥¤",
-        continueText: "à¤œà¤¾à¤°à¥€ à¤°à¤–à¥‡à¤‚",
-        retryVoice: "à¤«à¤¿à¤° à¤¸à¥‡ à¤µà¥‰à¤‡à¤¸",
-        restart: "à¤«à¤¿à¤° à¤¸à¥‡ à¤¶à¥à¤°à¥‚ à¤•à¤°à¥‡à¤‚",
-        nextPatient: "à¤…à¤—à¤²à¤¾ à¤®à¤°à¥€à¤œ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚",
-        nameLabel: "à¤®à¤°à¥€à¤œ à¤•à¤¾ à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚",
-        namePlaceholder: "à¤‰à¤¦à¤¾à¤¹à¤°à¤£: à¤°à¤®à¥‡à¤¶",
-        resultTitle: "à¤ªà¤‚à¤œà¥€à¤•à¤°à¤£ à¤ªà¥‚à¤°à¤¾ à¤¹à¥à¤†",
-        doctorLabel: "à¤¡à¥‰à¤•à¥à¤Ÿà¤°",
-        patientLabel: "à¤®à¤°à¥€à¤œ",
-        tokenLabel: "à¤Ÿà¥‹à¤•à¤¨ à¤¨à¤‚à¤¬à¤°",
-        waitLabel: "à¤…à¤¨à¥à¤®à¤¾à¤¨à¤¿à¤¤ à¤ªà¥à¤°à¤¤à¥€à¤•à¥à¤·à¤¾ à¤¸à¤®à¤¯",
-        timeLabel: "à¤…à¤¨à¥à¤®à¤¾à¤¨à¤¿à¤¤ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¯",
-        footNote: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¥ˆà¤ à¤¿à¤à¥¤ à¤†à¤ªà¤•à¥€ à¤¸à¥à¤¥à¤¿à¤¤à¤¿ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¡à¥ˆà¤¶à¤¬à¥‹à¤°à¥à¤¡ à¤ªà¤° à¤¤à¥à¤°à¤‚à¤¤ à¤¦à¤¿à¤–à¥‡à¤—à¥€à¥¤",
-        speakResult: ({ token, waitMinutes }) => `à¤†à¤ªà¤•à¤¾ à¤Ÿà¥‹à¤•à¤¨ à¤¨à¤‚à¤¬à¤° ${token} à¤¹à¥ˆà¥¤ à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¥ˆà¤ à¤¿à¤à¥¤ à¤²à¤—à¤­à¤— ${waitMinutes} à¤®à¤¿à¤¨à¤Ÿ à¤®à¥‡à¤‚ à¤†à¤ªà¤•à¥€ à¤¬à¤¾à¤°à¥€ à¤†à¤à¤—à¥€à¥¤`,
-        voiceReady: "à¤µà¥‰à¤‡à¤¸ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤¤à¥ˆà¤¯à¤¾à¤° à¤¹à¥ˆ",
-        voiceFallback: "à¤¯à¤¦à¤¿ à¤µà¥‰à¤‡à¤¸ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨ à¤¹à¥‹ à¤¤à¥‹ à¤¬à¤¡à¤¼à¥‡ à¤¬à¤Ÿà¤¨ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤•à¤°à¥‡à¤‚",
-        dbReady: "Firestore à¤œà¥à¤¡à¤¼ à¤—à¤¯à¤¾",
-        dbError: "Firestore à¤•à¤¨à¥‡à¤•à¥à¤¶à¤¨ à¤¤à¥à¤°à¥à¤Ÿà¤¿",
-        question: "à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤¹à¥ˆà¥¤ à¤†à¤ª à¤•à¤¿à¤¸ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¸à¥‡ à¤®à¤¿à¤²à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?",
-        instruction: "à¤…à¤¬ à¤¬à¥‹à¤²à¤¿à¤à¥¤ à¤¯à¤¦à¤¿ à¤µà¥‰à¤‡à¤¸ à¤•à¤¾à¤® à¤¨ à¤•à¤°à¥‡ à¤¤à¥‹ à¤¨à¥€à¤šà¥‡ à¤•à¥‡ à¤¬à¤¡à¤¼à¥‡ à¤¬à¤Ÿà¤¨ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤•à¤°à¥‡à¤‚à¥¤",
-        chooseDoctor: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤šà¥à¤¨à¥‡à¤‚à¥¤",
-        availableBanner: "à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¹à¥ˆà¤‚à¥¤",
-        usingOnlineVoice: "à¤¤à¥‡à¤²à¥à¤—à¥ à¤†à¤µà¤¾à¤œà¤¼ à¤•à¥‡ à¤²à¤¿à¤ à¤‘à¤¨à¤²à¤¾à¤‡à¤¨ à¤‘à¤¡à¤¿à¤¯à¥‹ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤‡à¤¸à¥à¤¤à¥‡à¤®à¤¾à¤² à¤¹à¥‹ à¤°à¤¹à¥€ à¤¹à¥ˆà¥¤",
-        tapToEnableVoice: "à¤¸à¥à¤•à¥à¤°à¥€à¤¨ à¤ªà¤° à¤à¤• à¤¬à¤¾à¤° à¤Ÿà¥ˆà¤ª à¤•à¤°à¥‡à¤‚ à¤”à¤° à¤«à¤¿à¤° à¤¸à¥‡ à¤ªà¥à¤°à¤¯à¤¾à¤¸ à¤•à¤°à¥‡à¤‚à¥¤",
+        label: "हिंदी",
+        welcome: "स्वागत है। आप किस डॉक्टर से मिलना चाहते हैं?",
+        askDoctor: "आप किस डॉक्टर से मिलना चाहते हैं?",
+        askName: "कृपया अपना नाम बताइए।",
+        unclearDoctor: "डॉक्टर का नाम साफ़ समझ नहीं आया। कृपया बटन दबाइए।",
+        unclearName: "आपका नाम साफ़ सुनाई नहीं दिया। कृपया टाइप करें या फिर से बोलें।",
+        continueText: "जारी रखें",
+        retryVoice: "फिर से वॉइस",
+        restart: "फिर से शुरू करें",
+        nextPatient: "अगला मरीज दर्ज करें",
+        nameLabel: "मरीज का नाम दर्ज करें",
+        namePlaceholder: "उदाहरण: रमेश",
+        resultTitle: "पंजीकरण पूरा हुआ",
+        doctorLabel: "डॉक्टर",
+        patientLabel: "मरीज",
+        tokenLabel: "टोकन नंबर",
+        waitLabel: "अनुमानित प्रतीक्षा समय",
+        timeLabel: "अनुमानित सेवा समय",
+        footNote: "कृपया बैठिए। आपकी स्थिति डॉक्टर डैशबोर्ड पर तुरंत दिखेगी।",
+        speakResult: ({ token, waitMinutes }) => `आपका टोकन नंबर ${token} है। कृपया बैठिए। लगभग ${waitMinutes} मिनट में आपकी बारी आएगी।`,
+        voiceReady: "वॉइस सहायता तैयार है",
+        voiceFallback: "यदि वॉइस उपलब्ध न हो तो बड़े बटन इस्तेमाल करें",
+        dbReady: "Firestore जुड़ गया",
+        dbError: "Firestore कनेक्शन त्रुटि",
+        question: "स्वागत है। आप किस डॉक्टर से मिलना चाहते हैं?",
+        instruction: "अब बोलिए। यदि वॉइस काम न करे तो नीचे के बड़े बटन इस्तेमाल करें।",
+        chooseDoctor: "कृपया डॉक्टर चुनें।",
+        availableBanner: "डॉक्टर अभी उपलब्ध हैं।",
+        usingOnlineVoice: "तेलुगु आवाज़ के लिए ऑनलाइन ऑडियो सहायता इस्तेमाल हो रही है।",
+        tapToEnableVoice: "स्क्रीन पर एक बार टैप करें और फिर से प्रयास करें।",
         alerts: {
-          chooseDoctor: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤šà¥à¤¨à¥‡à¤‚à¥¤",
-          enterName: "à¤•à¥ƒà¤ªà¤¯à¤¾ à¤®à¤°à¥€à¤œ à¤•à¤¾ à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚à¥¤"
+          chooseDoctor: "कृपया डॉक्टर चुनें।",
+          enterName: "कृपया मरीज का नाम दर्ज करें।"
         }
       }
     };
@@ -654,8 +654,8 @@
     }
 
     function formatWaitMinutes(minutes) {
-      if (state.language === "te") return `${minutes} à°¨à°¿à°®à°¿à°·à°¾à°²à±`;
-      if (state.language === "hi") return `${minutes} à¤®à¤¿à¤¨à¤Ÿ`;
+      if (state.language === "te") return `${minutes} నిమిషాలు`;
+      if (state.language === "hi") return `${minutes} मिनट`;
       return `${minutes} minutes`;
     }
 
@@ -680,18 +680,18 @@
 
     function getAvailabilityLabel(status) {
       if (state.language === "te") {
-        if (status === "break") return "à°¸à±à°¥à°¿à°¤à°¿: à°µà°¿à°°à°¾à°®à°‚à°²à±‹";
-        if (status === "surgery") return "à°¸à±à°¥à°¿à°¤à°¿: à°¶à°¸à±à°¤à±à°°à°šà°¿à°•à°¿à°¤à±à°¸à°²à±‹";
-        if (status === "signedoff") return "à°¸à±à°¥à°¿à°¤à°¿: à°ˆà°°à±‹à°œà±à°•à± à°¸à±†à°²à°µà±";
-        if (status === "unavailable") return "à°¸à±à°¥à°¿à°¤à°¿: à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°²à±‡à°°à±";
-        return "à°¸à±à°¥à°¿à°¤à°¿: à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹";
+        if (status === "break") return "స్థితి: విరామంలో";
+        if (status === "surgery") return "స్థితి: శస్త్రచికిత్సలో";
+        if (status === "signedoff") return "స్థితి: ఈరోజుకు సెలవు";
+        if (status === "unavailable") return "స్థితి: ప్రస్తుతం అందుబాటులో లేరు";
+        return "స్థితి: అందుబాటులో";
       }
       if (state.language === "hi") {
-        if (status === "break") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤¬à¥à¤°à¥‡à¤• à¤ªà¤°";
-        if (status === "surgery") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤¸à¤°à¥à¤œà¤°à¥€ à¤®à¥‡à¤‚";
-        if (status === "signedoff") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤†à¤œ à¤…à¤µà¤•à¤¾à¤¶ à¤ªà¤°";
-        if (status === "unavailable") return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚";
-        return "à¤¸à¥à¤¥à¤¿à¤¤à¤¿: à¤‰à¤ªà¤²à¤¬à¥à¤§";
+        if (status === "break") return "स्थिति: ब्रेक पर";
+        if (status === "surgery") return "स्थिति: सर्जरी में";
+        if (status === "signedoff") return "स्थिति: आज अवकाश पर";
+        if (status === "unavailable") return "स्थिति: अभी उपलब्ध नहीं";
+        return "स्थिति: उपलब्ध";
       }
       if (status === "break") return "Status: On Break";
       if (status === "surgery") return "Status: In Surgery";
@@ -704,18 +704,18 @@
       const schedule = state.doctorStatuses[state.selectedDoctorId] || {};
       const extra = buildAvailabilityText(schedule, { includeTodayUntil: false });
       if (state.language === "te") {
-        if (status === "break") return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°µà°¿à°°à°¾à°®à°‚à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±. à°•à°¨à±€à°¸à°‚ ${BREAK_DELAY_MINUTES} à°¨à°¿à°®à°¿à°·à°¾à°² à°†à°²à°¸à±à°¯à°‚ à°‰à°‚à°Ÿà±à°‚à°¦à°¿. ${extra}`.trim();
-        if (status === "surgery") return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°¶à°¸à±à°¤à±à°°à°šà°¿à°•à°¿à°¤à±à°¸à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±. à°•à°¨à±€à°¸à°‚ 1 à°¨à±à°‚à°šà°¿ 2 à°—à°‚à°Ÿà°² à°†à°²à°¸à±à°¯à°‚ à°‰à°‚à°Ÿà±à°‚à°¦à°¿. ${extra}`.trim();
-        if (status === "signedoff") return `${doctorName} à°ˆà°°à±‹à°œà±à°•à± à°¸à±‡à°µà°²à± à°®à±à°—à°¿à°‚à°šà°¾à°°à±. ${extra}`.trim();
-        if (status === "unavailable") return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°²à±‡à°°à±. ${extra}`.trim();
-        return `${doctorName} à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°²à±‡à°°à±.`;
+        if (status === "break") return `${doctorName} ప్రస్తుతం విరామంలో ఉన్నారు. కనీసం ${BREAK_DELAY_MINUTES} నిమిషాల ఆలస్యం ఉంటుంది. ${extra}`.trim();
+        if (status === "surgery") return `${doctorName} ప్రస్తుతం శస్త్రచికిత్సలో ఉన్నారు. కనీసం 1 నుంచి 2 గంటల ఆలస్యం ఉంటుంది. ${extra}`.trim();
+        if (status === "signedoff") return `${doctorName} ఈరోజుకు సేవలు ముగించారు. ${extra}`.trim();
+        if (status === "unavailable") return `${doctorName} ప్రస్తుతం అందుబాటులో లేరు. ${extra}`.trim();
+        return `${doctorName} ప్రస్తుతం అందుబాటులో లేరు.`;
       }
       if (state.language === "hi") {
-        if (status === "break") return `${doctorName} à¤…à¤­à¥€ à¤¬à¥à¤°à¥‡à¤• à¤ªà¤° à¤¹à¥ˆà¤‚à¥¤ à¤•à¤® à¤¸à¥‡ à¤•à¤® ${BREAK_DELAY_MINUTES} à¤®à¤¿à¤¨à¤Ÿ à¤•à¥€ à¤¦à¥‡à¤°à¥€ à¤¹à¥‹à¤—à¥€à¥¤ ${extra}`.trim();
-        if (status === "surgery") return `${doctorName} à¤…à¤­à¥€ à¤¸à¤°à¥à¤œà¤°à¥€ à¤®à¥‡à¤‚ à¤¹à¥ˆà¤‚à¥¤ à¤•à¤® à¤¸à¥‡ à¤•à¤® 1 à¤¸à¥‡ 2 à¤˜à¤‚à¤Ÿà¥‡ à¤•à¥€ à¤¦à¥‡à¤°à¥€ à¤¹à¥‹à¤—à¥€à¥¤ ${extra}`.trim();
-        if (status === "signedoff") return `${doctorName} à¤¨à¥‡ à¤†à¤œ à¤•à¥‡ à¤²à¤¿à¤ à¤¸à¥‡à¤µà¤¾ à¤¬à¤‚à¤¦ à¤•à¤° à¤¦à¥€ à¤¹à¥ˆà¥¤ ${extra}`.trim();
-        if (status === "unavailable") return `${doctorName} à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¤‚à¥¤ ${extra}`.trim();
-        return `${doctorName} à¤…à¤­à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¤‚à¥¤`;
+        if (status === "break") return `${doctorName} अभी ब्रेक पर हैं। कम से कम ${BREAK_DELAY_MINUTES} मिनट की देरी होगी। ${extra}`.trim();
+        if (status === "surgery") return `${doctorName} अभी सर्जरी में हैं। कम से कम 1 से 2 घंटे की देरी होगी। ${extra}`.trim();
+        if (status === "signedoff") return `${doctorName} ने आज के लिए सेवा बंद कर दी है। ${extra}`.trim();
+        if (status === "unavailable") return `${doctorName} अभी उपलब्ध नहीं हैं। ${extra}`.trim();
+        return `${doctorName} अभी उपलब्ध नहीं हैं।`;
       }
       if (status === "break") return `${doctorName} is currently on break. There will be at least a ${BREAK_DELAY_MINUTES}-minute delay. ${extra}`.trim();
       if (status === "surgery") return `${doctorName} is currently in surgery. There will be at least a 1 to 2 hour delay. ${extra}`.trim();
@@ -758,18 +758,18 @@
       const parts = [];
       if (includeTodayUntil && schedule.availableUntil && hasFutureAvailableUntil(schedule.availableUntil)) {
         parts.push(state.language === "te"
-          ? `à°¡à°¾à°•à±à°Ÿà°°à± à°ˆà°°à±‹à°œà± ${schedule.availableUntil} à°µà°°à°•à± à°…à°‚à°¦à±à°¬à°¾à°Ÿà±à°²à±‹ à°‰à°‚à°Ÿà°¾à°°à±`
+          ? `డాక్టర్ ఈరోజు ${schedule.availableUntil} వరకు అందుబాటులో ఉంటారు`
           : state.language === "hi"
-            ? `à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤†à¤œ ${schedule.availableUntil} à¤¤à¤• à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤°à¤¹à¥‡à¤‚à¤—à¥‡`
+            ? `डॉक्टर आज ${schedule.availableUntil} तक उपलब्ध रहेंगे`
             : `Doctor is available today until ${schedule.availableUntil}`);
       }
       if (schedule.nextAvailableDate || schedule.nextAvailableTime) {
         const dateText = formatAvailabilityDate(schedule.nextAvailableDate);
         const timeText = schedule.nextAvailableTime || "";
         parts.push(state.language === "te"
-          ? `à°¤à°¦à±à°ªà°°à°¿ à°…à°‚à°¦à±à°¬à°¾à°Ÿà± ${dateText} ${timeText}`.trim()
+          ? `తదుపరి అందుబాటు ${dateText} ${timeText}`.trim()
           : state.language === "hi"
-            ? `à¤…à¤—à¤²à¥€ à¤‰à¤ªà¤²à¤¬à¥à¤§à¤¤à¤¾ ${dateText} ${timeText}`.trim()
+            ? `अगली उपलब्धता ${dateText} ${timeText}`.trim()
             : `Next available ${dateText} ${timeText}`.trim());
       }
       return parts.join(". ");
@@ -1193,4 +1193,3 @@
   </script>
 </body>
 </html>
-
